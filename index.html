@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yosef Reta Aychiluhim — Offline-First Systems Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --blue-deep:#0F2647;
+    --blue-mid:#173B6B;
+    --blue-line:#5B85B8;
+    --paper:#F1EBDA;
+    --paper-ink:#16233A;
+    --amber:#E8A248;
+    --green:#6FBE8F;
+    --cream:#F4EFE2;
+    --muted:#8FA6C4;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--blue-deep); color:var(--cream); font-family:var(--sans); line-height:1.5; overflow-x:hidden;}
+  a{color:inherit;}
+
+  .blueprint-grid{
+    background-image:
+      linear-gradient(var(--blue-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--blue-line) 1px, transparent 1px);
+    background-size: 36px 36px; background-position:-1px -1px;
+    opacity:0.14; position:absolute; inset:0; pointer-events:none;
+  }
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+
+  nav{position:sticky; top:0; z-index:50; background:rgba(15,38,71,0.92); backdrop-filter:blur(6px); border-bottom:1px solid rgba(91,133,184,0.35);}
+  nav .wrap{display:flex; justify-content:space-between; align-items:center; padding:16px 28px; font-family:var(--mono); font-size:12.5px; letter-spacing:0.06em;}
+  .nav-mark{font-weight:700; color:var(--cream); text-transform:uppercase;}
+  .nav-mark span{color:var(--amber);}
+  .nav-status{display:flex; align-items:center; gap:8px; color:var(--muted);}
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--green); box-shadow:0 0 6px var(--green); animation:pulse 2.4s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.35;}}
+
+  header.hero{position:relative; padding:96px 0 64px; overflow:hidden;}
+  .eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:0.14em; color:var(--amber); text-transform:uppercase; margin-bottom:22px; display:flex; align-items:center; gap:10px;}
+  .eyebrow::before{content:''; width:22px; height:1px; background:var(--amber);}
+  h1.headline{font-family:var(--mono); font-weight:800; font-size:clamp(30px,4.8vw,52px); line-height:1.1; letter-spacing:-0.01em; max-width:820px; color:var(--cream);}
+  .name-line{font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:0.06em; margin-top:16px; text-transform:uppercase;}
+  h1.headline em{font-style:normal; color:var(--muted);}
+  .sub{max-width:580px; margin-top:22px; font-size:17px; color:var(--muted);}
+  .sub strong{color:var(--cream); font-weight:600;}
+
+  .callouts{display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin-top:56px; border-top:1px solid rgba(91,133,184,0.35);}
+  .callout{padding:20px 22px 0; border-right:1px solid rgba(91,133,184,0.35); position:relative;}
+  .callout:last-child{border-right:none;}
+  .callout .num{font-family:var(--mono); font-weight:700; font-size:26px; color:var(--amber);}
+  .callout .label{font-family:var(--mono); font-size:11px; letter-spacing:0.07em; color:var(--muted); text-transform:uppercase; margin-top:6px;}
+
+  .diagram-frame{margin-top:64px; border:1px solid rgba(91,133,184,0.5); background:rgba(23,59,107,0.35); position:relative; padding:18px;}
+  .diagram-frame .frame-label{position:absolute; top:-11px; left:16px; background:var(--blue-deep); padding:0 8px; font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--muted); text-transform:uppercase;}
+  svg.net{width:100%; height:auto; display:block;}
+  .node-core{fill:var(--amber);}
+  .node{fill:var(--blue-mid); stroke:var(--blue-line); stroke-width:1.4;}
+  .node.online{stroke:var(--green);}
+  .link{stroke:var(--blue-line); stroke-width:1; opacity:0.55;}
+  .pulse-ring{fill:none; stroke:var(--green); stroke-width:1.5; opacity:0;}
+  .ping-dot{fill:var(--green);}
+  .ntag{font-family:var(--mono); font-size:9px; fill:var(--muted); letter-spacing:0.04em;}
+
+  section{padding:88px 0; position:relative;}
+  .sec-head{margin-bottom:44px;}
+  .sec-eyebrow{font-family:var(--mono); font-size:12px; letter-spacing:0.12em; color:var(--amber); text-transform:uppercase; margin-bottom:14px;}
+  h2.sec-title{font-family:var(--mono); font-weight:700; font-size:clamp(24px,3.4vw,32px); color:var(--cream);}
+  .sec-desc{max-width:620px; color:var(--muted); margin-top:14px; font-size:15.5px;}
+
+  .about-line{font-family:var(--mono); font-size:11px; color:var(--blue-line); letter-spacing:0.06em; margin-bottom:8px; text-transform:uppercase;}
+
+  /* REVISION HISTORY (experience timeline) */
+  .revtable{border:1px solid rgba(91,133,184,0.5); background:rgba(23,59,107,0.25);}
+  .rev-head{display:grid; grid-template-columns:70px 130px 1fr 150px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); padding:14px 20px; border-bottom:1px solid rgba(91,133,184,0.5);}
+  .rev-row{display:grid; grid-template-columns:70px 130px 1fr 150px; padding:16px 20px; border-bottom:1px solid rgba(91,133,184,0.25); font-size:14px; align-items:start; gap:6px;}
+  .rev-row:last-child{border-bottom:none;}
+  .rev-row .rev-id{font-family:var(--mono); color:var(--amber); font-weight:700;}
+  .rev-row .rev-date{font-family:var(--mono); font-size:12px; color:var(--muted);}
+  .rev-row .rev-desc{color:var(--cream);}
+  .rev-row .rev-desc .org{display:block; color:var(--muted); font-size:12.5px; margin-top:2px; font-family:var(--mono);}
+  .rev-row .rev-status{font-family:var(--mono); font-size:11px; color:var(--green); text-align:right;}
+  @media (max-width:700px){
+    .rev-head{display:none;}
+    .rev-row{grid-template-columns:1fr; gap:4px; padding:16px 18px;}
+    .rev-row .rev-status{text-align:left;}
+  }
+
+  .sheet{background:var(--paper); color:var(--paper-ink); border-radius:2px; margin-bottom:34px; position:relative; box-shadow:0 18px 40px -18px rgba(0,0,0,0.55);}
+  .sheet-titleblock{display:flex; justify-content:space-between; align-items:flex-start; padding:22px 26px; border-bottom:2px solid var(--paper-ink); flex-wrap:wrap; gap:14px;}
+  .sheet-id{font-family:var(--mono); font-size:11px; color:#5a5140; letter-spacing:0.08em;}
+  .sheet-name{font-family:var(--mono); font-weight:700; font-size:21px; margin-top:6px;}
+  .sheet-status{display:flex; align-items:center; gap:8px; font-family:var(--mono); font-size:11px; letter-spacing:0.06em; background:#0F2647; color:var(--green); padding:6px 12px; border-radius:20px; white-space:nowrap; height:fit-content;}
+  .sheet-status .dot{background:var(--green); box-shadow:0 0 6px var(--green);}
+  .sheet-body{padding:26px; display:grid; grid-template-columns:1fr 1fr; gap:26px;}
+  @media (max-width:720px){ .sheet-body{grid-template-columns:1fr;} }
+  .field-label{font-family:var(--mono); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase; color:#6b6350; margin-bottom:8px;}
+  .field-text{font-size:14.5px; line-height:1.55; color:#2a2415;}
+  .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px;}
+  .tag{font-family:var(--mono); font-size:11px; padding:4px 9px; border:1px solid #2a2415; border-radius:2px; color:#2a2415;}
+  .sheet-full{grid-column:1 / -1; border-top:1px dashed #b8ad8f; padding-top:18px; margin-top:4px;}
+
+  .bom{border:1px solid rgba(91,133,184,0.5); background:rgba(23,59,107,0.25);}
+  .bom-head{display:grid; grid-template-columns:60px 1fr 1fr; font-family:var(--mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); padding:14px 20px; border-bottom:1px solid rgba(91,133,184,0.5);}
+  .bom-row{display:grid; grid-template-columns:60px 1fr 1fr; padding:14px 20px; border-bottom:1px solid rgba(91,133,184,0.25); font-size:14px; align-items:center;}
+  .bom-row:last-child{border-bottom:none;}
+  .bom-row .idx{font-family:var(--mono); color:var(--muted);}
+  .bom-row .cat{color:var(--cream); font-weight:500;}
+  .bom-row .items{color:var(--muted); font-family:var(--mono); font-size:12.5px;}
+  @media (max-width:640px){
+    .bom-head{grid-template-columns:40px 1fr;} .bom-head span:nth-child(3){display:none;}
+    .bom-row{grid-template-columns:40px 1fr; row-gap:6px;} .bom-row .items{grid-column:1 / -1; padding-left:40px;}
+  }
+
+  /* CREDENTIALS */
+  .credgrid{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+  @media (max-width:700px){.credgrid{grid-template-columns:1fr;}}
+  .credcard{border:1px solid rgba(91,133,184,0.5); background:rgba(23,59,107,0.25); padding:22px;}
+  .credcard .field-label{color:var(--amber);}
+  .credcard .cred-title{font-family:var(--mono); font-weight:700; font-size:15.5px; color:var(--cream); margin-bottom:4px;}
+  .credcard .cred-sub{font-size:13.5px; color:var(--muted);}
+
+  footer{padding:80px 0 60px; border-top:1px solid rgba(91,133,184,0.35);}
+  .footer-block{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:30px;}
+  .cta-title{font-family:var(--mono); font-weight:700; font-size:clamp(24px,3.6vw,34px); max-width:520px; line-height:1.2;}
+  .cta-title .amber{color:var(--amber);}
+  .contact{font-family:var(--mono); font-size:13.5px; color:var(--muted); line-height:2;}
+  .contact a{color:var(--cream); text-decoration:none; border-bottom:1px solid var(--blue-line);}
+  .end-note{margin-top:64px; padding-top:20px; border-top:1px solid rgba(91,133,184,0.25); font-family:var(--mono); font-size:11px; color:#5b7196; letter-spacing:0.04em; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+
+  ::selection{background:var(--amber); color:var(--blue-deep);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="nav-mark">Y. RETA<span>.</span> — SYSTEMS</div>
+    <div class="nav-status"><span class="dot"></span> AVAILABLE FOR CONTRACT WORK</div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="blueprint-grid"></div>
+  <div class="wrap" style="position:relative;">
+    <div class="eyebrow">Systems Engineer — Addis Ababa, Ethiopia</div>
+    <h1 class="headline">I build software that keeps working <em>when the internet doesn't.</em></h1>
+    <div class="name-line">Yosef Reta Aychiluhim — Junior IT Officer, Commercial Bank of Ethiopia</div>
+    <p class="sub">Offline-first tools for banking infrastructure and field operations — <strong>desktop apps, web consoles, and network monitors</strong> built to run on a closed LAN, with no server, no cloud, and no excuses.</p>
+
+    <div class="callouts">
+      <div class="callout"><div class="num">200+</div><div class="label">Terminals monitored live</div></div>
+      <div class="callout"><div class="num">40%</div><div class="label">Faster data entry, hospital EHR project</div></div>
+      <div class="callout"><div class="num">4</div><div class="label">Systems shipped &amp; running</div></div>
+    </div>
+
+    <div class="diagram-frame">
+      <div class="frame-label">FIG.01 — LAN Topology / Ping Sweep</div>
+      <svg class="net" viewBox="0 0 940 220" xmlns="http://www.w3.org/2000/svg">
+        <g class="link">
+          <line x1="470" y1="110" x2="120" y2="45"/>
+          <line x1="470" y1="110" x2="120" y2="110"/>
+          <line x1="470" y1="110" x2="120" y2="175"/>
+          <line x1="470" y1="110" x2="820" y2="45"/>
+          <line x1="470" y1="110" x2="820" y2="110"/>
+          <line x1="470" y1="110" x2="820" y2="175"/>
+          <line x1="470" y1="110" x2="290" y2="20"/>
+          <line x1="470" y1="110" x2="650" y2="20"/>
+          <line x1="470" y1="110" x2="290" y2="200"/>
+          <line x1="470" y1="110" x2="650" y2="200"/>
+        </g>
+        <g>
+          <circle class="node online" cx="120" cy="45" r="7"/>
+          <circle class="node online" cx="120" cy="110" r="7"/>
+          <circle class="node" cx="120" cy="175" r="7"/>
+          <circle class="node online" cx="820" cy="45" r="7"/>
+          <circle class="node online" cx="820" cy="110" r="7"/>
+          <circle class="node online" cx="820" cy="175" r="7"/>
+          <circle class="node online" cx="290" cy="20" r="6"/>
+          <circle class="node" cx="650" cy="20" r="6"/>
+          <circle class="node online" cx="290" cy="200" r="6"/>
+          <circle class="node online" cx="650" cy="200" r="6"/>
+        </g>
+        <text class="ntag" x="132" y="42">T-014</text>
+        <text class="ntag" x="132" y="113">T-027</text>
+        <text class="ntag" x="132" y="178">T-098</text>
+        <text class="ntag" x="796" y="42">T-133</text>
+        <text class="ntag" x="796" y="113">T-141</text>
+        <text class="ntag" x="796" y="178">T-166</text>
+        <circle class="node-core" cx="470" cy="110" r="11"/>
+        <text class="ntag" x="443" y="140" style="fill:var(--amber);">MONITOR CORE</text>
+        <circle class="pulse-ring" cx="470" cy="110" r="20">
+          <animate attributeName="r" values="14;150" dur="3.2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.7;0" dur="3.2s" repeatCount="indefinite"/>
+        </circle>
+        <circle class="ping-dot" cx="120" cy="45" r="3"><animate attributeName="opacity" values="1;0.15;1" dur="2.1s" repeatCount="indefinite"/></circle>
+        <circle class="ping-dot" cx="820" cy="110" r="3"><animate attributeName="opacity" values="1;0.15;1" dur="1.7s" repeatCount="indefinite"/></circle>
+        <circle class="ping-dot" cx="290" cy="200" r="3"><animate attributeName="opacity" values="1;0.15;1" dur="2.6s" repeatCount="indefinite"/></circle>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="about-line">// Positioning</div>
+    <p class="sec-desc" style="font-size:16.5px; color:var(--cream); max-width:680px;">
+      I'm a systems/IT engineer currently supporting ATM and branch infrastructure at Commercial Bank of Ethiopia, with earlier experience building network and healthcare systems at the Ethiopian Federal Police Hospital. In my spare cycles I build the tools operations teams wished they already had: offline monitoring, file access, and reporting software that runs without a server room behind it. This page shows generalized versions of systems I've designed and shipped.
+    </p>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">// Revision History</div>
+      <h2 class="sec-title">Work experience</h2>
+      <p class="sec-desc">Read top to bottom like a drawing's revision log — each entry is a step up in scope.</p>
+    </div>
+    <div class="revtable">
+      <div class="rev-head"><span>REV</span><span>DATE</span><span>ROLE</span><span>STATUS</span></div>
+      <div class="rev-row">
+        <span class="rev-id">C</span>
+        <span class="rev-date">Apr 2023 — Present</span>
+        <span class="rev-desc">Junior IT Officer <span class="org">Commercial Bank of Ethiopia — Yeka District IS Support</span></span>
+        <span class="rev-status">● ACTIVE</span>
+      </div>
+      <div class="rev-row">
+        <span class="rev-id">B</span>
+        <span class="rev-date">Nov 2022 — Apr 2023</span>
+        <span class="rev-desc">Junior System Administrator <span class="org">Ethiopian Federal Police Hospital</span></span>
+        <span class="rev-status">COMPLETE</span>
+      </div>
+      <div class="rev-row">
+        <span class="rev-id">A</span>
+        <span class="rev-date">Aug 2021 — Nov 2022</span>
+        <span class="rev-desc">IT Volunteer <span class="org">Ethiopian Federal Police Hospital</span></span>
+        <span class="rev-status">COMPLETE</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">// Selected Systems</div>
+      <h2 class="sec-title">Four systems, one constraint: build it so it works offline.</h2>
+      <p class="sec-desc">Details below are generalized to protect client-specific configuration.</p>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-titleblock">
+        <div><div class="sheet-id">SYSTEM-01 / DESKTOP</div><div class="sheet-name">LAN Terminal &amp; File Explorer</div></div>
+        <div class="sheet-status"><span class="dot"></span> DEPLOYED — LIVE</div>
+      </div>
+      <div class="sheet-body">
+        <div><div class="field-label">Problem</div><p class="field-text">Operations staff needed to browse and monitor files across 200+ networked terminals — with no central database and no internet connection, ever.</p></div>
+        <div><div class="field-label">Constraints</div><p class="field-text">Fully offline. No database. Portable single-executable. Role-based access for admins vs. viewers.</p></div>
+        <div class="sheet-full">
+          <div class="field-label">Build</div>
+          <p class="field-text">A portable Windows desktop app with manual ping monitoring over raw sockets, direct network-share browsing, a built-in file viewer, and ZIP export — settings persisted to flat files instead of a database.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">CustomTkinter</span><span class="tag">PyInstaller</span><span class="tag">Socket / ICMP</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-titleblock">
+        <div><div class="sheet-id">SYSTEM-02 / MONITORING</div><div class="sheet-name">Offline Network Monitoring Dashboard</div></div>
+        <div class="sheet-status"><span class="dot"></span> DEPLOYED — LIVE</div>
+      </div>
+      <div class="sheet-body">
+        <div><div class="field-label">Problem</div><p class="field-text">The team needed live, PRTG-style visibility into hundreds of LAN devices — terminals, servers, routers — without a paid monitoring license or any cloud dependency.</p></div>
+        <div><div class="field-label">Constraints</div><p class="field-text">Zero license cost. Zero external services. Had to feel like an enterprise NOC tool, not a script.</p></div>
+        <div class="sheet-full">
+          <div class="field-label">Build</div>
+          <p class="field-text">A custom ICMP/TCP reachability engine feeding a live browser-based dashboard, with a device-tree layout inspired by commercial NOC tools — rebuilt from scratch to run entirely on the local network.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">ICMP / TCP Probing</span><span class="tag">Browser Dashboard</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-titleblock">
+        <div><div class="sheet-id">SYSTEM-03 / WEB CONSOLE</div><div class="sheet-name">Single-File Enterprise Consoles</div></div>
+        <div class="sheet-status"><span class="dot"></span> DEPLOYED — LIVE</div>
+      </div>
+      <div class="sheet-body">
+        <div><div class="field-label">Problem</div><p class="field-text">Operations teams needed usable web apps — a personnel/call tracker and an ATM network console — with zero IT overhead: no server, no install, no ticket.</p></div>
+        <div><div class="field-label">Constraints</div><p class="field-text">Had to run as a single HTML file, entirely offline, with no backend of any kind.</p></div>
+        <div class="sheet-full">
+          <div class="field-label">Build</div>
+          <p class="field-text">Browser-based apps using IndexedDB for local storage, SheetJS for spreadsheet import/export, and Chart.js for reporting — opened directly from a file and fully functional with no connection.</p>
+          <div class="tags"><span class="tag">JavaScript</span><span class="tag">IndexedDB</span><span class="tag">SheetJS</span><span class="tag">Chart.js</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <div class="sheet-titleblock">
+        <div><div class="sheet-id">SYSTEM-04 / HEALTHCARE</div><div class="sheet-name">Patient Tracking &amp; EHR Tools</div></div>
+        <div class="sheet-status"><span class="dot"></span> DEPLOYED — LIVE</div>
+      </div>
+      <div class="sheet-body">
+        <div><div class="field-label">Problem</div><p class="field-text">Clinical staff at a public hospital were tracking patient and referral data by hand, slowing intake and losing consistency across departments.</p></div>
+        <div><div class="field-label">Constraints</div><p class="field-text">Needed a lightweight, local, easy-to-learn interface clinicians could adopt without training overhead — while feeding into the hospital's broader EHR rollout.</p></div>
+        <div class="sheet-full">
+          <div class="field-label">Build</div>
+          <p class="field-text">A local web-based patient tracking system with simple data-entry forms and reporting views, cutting manual entry time by roughly 40% — plus contributions to the hospital's network infrastructure (racking, trunking, configuration) and its early-stage EHR rollout.</p>
+          <div class="tags"><span class="tag">HTML</span><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">Network Infrastructure</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">// Capabilities</div>
+      <h2 class="sec-title">Bill of materials</h2>
+    </div>
+    <div class="bom">
+      <div class="bom-head"><span>NO.</span><span>Category</span><span>Tools</span></div>
+      <div class="bom-row"><span class="idx">01</span><span class="cat">Development</span><span class="items">HTML · CSS · JavaScript · PHP · MySQL · Python</span></div>
+      <div class="bom-row"><span class="idx">02</span><span class="cat">Offline Applications</span><span class="items">CustomTkinter · PyInstaller · IndexedDB · SheetJS · Chart.js</span></div>
+      <div class="bom-row"><span class="idx">03</span><span class="cat">Networking</span><span class="items">TCP/IP · DNS · VPNs · LAN/WAN Troubleshooting · Packet Analyzers</span></div>
+      <div class="bom-row"><span class="idx">04</span><span class="cat">Banking &amp; Enterprise Systems</span><span class="items">Core Banking (T24) · IBM Ticketing · Remote Desktop Support</span></div>
+      <div class="bom-row"><span class="idx">05</span><span class="cat">Process</span><span class="items">Agile / Sprint Planning · Product Lifecycle · Documentation</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="credentials">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-eyebrow">// Credentials</div>
+      <h2 class="sec-title">Education</h2>
+    </div>
+    <div class="credgrid">
+      <div class="credcard">
+        <div class="field-label">Degree</div>
+        <div class="cred-title">BSc, Computer Science</div>
+        <div class="cred-sub">Addis Ababa University</div>
+      </div>
+      <div class="credcard">
+        <div class="field-label">Degree</div>
+        <div class="cred-title">Master's, Leadership &amp; Management</div>
+        <div class="cred-sub">FDRE Technical and Vocational Institute</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-block">
+      <div class="cta-title">Need something built for a network that can't be trusted to stay online? <span class="amber">Let's talk.</span></div>
+      <div class="contact">
+        EMAIL — <a href="mailto:yosefreta23@gmail.com">yosefreta23@gmail.com</a><br>
+        PHONE — <a href="tel:+251927362144">+251 92 736 2144</a><br>
+        LOCATION — Addis Ababa, ET
+      </div>
+    </div>
+    <div class="end-note">
+      <span>DRAWING NO. PORTFOLIO-2026 / REV.B</span>
+      <span>END OF DOCUMENT</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
