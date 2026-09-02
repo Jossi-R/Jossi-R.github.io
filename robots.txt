@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yosefreta.github.io/sitemap.xml
